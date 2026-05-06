@@ -1,0 +1,64 @@
+# Rules for working on this repository
+
+Guidance for humans and AI assistants. Prefer these over ad hoc improvisation.
+
+## Instructions (prompt prefixes)
+
+The user may prefix a prompt with a mode keyword. If present, follow it without exception:
+
+| Prefix | Behaviour |
+|--------|-------------|
+| **FIND** | Report where the requested item is (file path and, if useful, line number). **Do not** modify any files. |
+| **DIAGNOSE** | Read all relevant files end-to-end until the problem context is clear. Give root-cause analysis, conclusion, and a suggested fix. **Do not** modify any files. |
+| **FIX** | Implement the specified fix or solution. If the approach is unclear, stop and ask for clarification before changing code. |
+| **MAKE** | Implement the requested change, feature, or behaviour. Review existing code end-to-end first to avoid duplication, redundancy, and unnecessary complexity. |
+| **EXPLAIN** | With reference to this project and reputable external sources, describe best-practice ways to implement what is asked and why. **Do not** modify any files. |
+| **PLAN** | Provide a numbered, staged plan to achieve the request. **Do not** modify any files. |
+| **RECOMMEND** | Give at most **10** distinct, implementable actions, each with a very brief explanation. **Do not** modify any files. |
+| **CONFIRM** | Assess the user’s statement. **Do not** modify any files. Reply **True** or **False** only; add a short explanation only if the prompt is ambiguous or ill-formed. |
+| **SIMPLIFY** | Read the specified code end-to-end until behaviour and structure are fully understood. Simplify: remove redundancy, duplication, and avoidable complexity. |
+
+If no prefix is given, infer the appropriate mode from the request (most often **MAKE** or **FIX**).
+
+## User intent
+
+- Use the **current message**, **conversation history**, and **repository context** to infer what the user is trying to achieve, not only the literal wording.
+- Prefer the smallest change that satisfies the goal; avoid scope creep unless the user asks for it.
+
+## Simplicity and design
+
+- The codebase is edited by multiple people and tools with limited context. **Always** read relevant code in full (or in substantial contiguous chunks) before changing it.
+- Prefer solutions that fit existing patterns and can be reused; do not assume a one-off hack is correct without checking for shared utilities or prior art.
+- Layout and structure live primarily in **`static/css/base.css`**; colours, shadows, and component chrome in **`static/css/components.css`**. Follow that split unless the project has moved on.
+
+## Debugging and troubleshooting
+
+- Assume parts of the codebase may have been produced under tight context windows: watch for duplication and over-engineering, and simplify when you touch an area.
+- Assume the user may not be a professional software engineer: offer clear explanations and ask concise clarifying questions when requirements are unclear.
+- Format data files (e.g. **`.json`**) for **human readability** (consistent indentation, sensible line breaks), not minimal single-line dumps, unless tooling requires otherwise.
+
+## Validation
+
+- Do not alter code until dependencies, call sites, and surrounding structure are understood (search/read tools, not guesses).
+- Aim for **complete, verifiable** changes; partial or speculative fixes are not good enough for production behaviour.
+
+## Versioning and delivery
+
+- **Do not** create git commits or push unless the user explicitly asks (or a project rule says otherwise for automation).
+- Use **Conventional Commits**-style messages when committing (e.g. `feat:`, `fix:`, `docs:`), with clear, grammatical descriptions.
+- When adding or renaming **public HTML pages**, update deployment-related artefacts as needed: **`app.py`** routes (if using Flask), **`.htaccess`** rewrites (mirror patterns used for similar pages), and **`sitemap.xml`**.
+
+## Naming and language
+
+- **User-facing** copy, comments, and documentation: use **British English** (e.g. *centre*, *rationalise*, *behaviour*) unless matching a proper name, URL, or third-party string.
+- **Identifiers and APIs**: follow existing project conventions and external service names (often American English); do not rename for spelling alone if it breaks consistency or URLs.
+
+## Project orientation (quick reference)
+
+- **Static pages**: root-level `*.html` (e.g. `index.html`, `the-risk-deck.html`, `electioneer-uk.html`).
+- **Declarative sections**: `data-text-section` (**`static/js/text-section.js`**), `data-media-stack` (**`static/js/media-stack.js`**), `data-card-formula` (**`static/js/card-formula.js`**).
+- **Third-party embeds** (e.g. newsletter iframes): respect vendor markup; use wrapper/CSS in **`base.css`** when layout must work around inline styles (e.g. flex centre when inline `margin: 0` blocks `margin: auto`).
+
+---
+
+*Amend this file when team conventions change; keep it short and actionable.*
