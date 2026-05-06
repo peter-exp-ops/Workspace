@@ -17,9 +17,9 @@ Cursor runs **`git clone <url>`** on what you type. The URL must be the **git re
 https://github.com/peter-exp-ops/Workspace.git
 ```
 
-Do **not** add `/Rules.md` to that box. If Cursor has a **second** field (e.g. “Rule file”, “Path”, “Subpath”), put **`Rules.md`** there only.
+Do **not** add `/Rules.md` (or any path) to the repository URL.
 
-If there is only **one** URL field and no path field, import the repo, then point the rule at **`Rules.md`** in the picker if Cursor offers it; otherwise use the raw file below.
+**Importable Cursor rules** live under **`.cursor/rules/*.mdc`** (YAML frontmatter + markdown). This repo includes **`.cursor/rules/workspace-standards.mdc`**. Root **`Rules.md`** is the same content for humans, GitHub browsing, and raw copy-paste — Cursor’s GitHub rule import does **not** use `Rules.md` by itself.
 
 **Also valid (no `.git`):**
 
@@ -27,6 +27,7 @@ If there is only **one** URL field and no path field, import the repo, then poin
 
 **If you still get `Not Found`:** the repo may be **private** and the import may run git without your GitHub login. Make the repo public or import via **raw URL** / paste file content instead.
 
-**Alternative:** paste the raw file into a project rule, or copy from:
+**Alternative:** paste into a project rule, or copy from:
 
-`https://raw.githubusercontent.com/peter-exp-ops/Workspace/main/Rules.md`
+- `https://raw.githubusercontent.com/peter-exp-ops/Workspace/main/Rules.md`
+- `https://raw.githubusercontent.com/peter-exp-ops/Workspace/main/.cursor/rules/workspace-standards.mdc`
